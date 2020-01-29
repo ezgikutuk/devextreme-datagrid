@@ -62,7 +62,7 @@ export class AppComponent {
   }
   @ViewChild(DxDataGridComponent, { static: false }) dataGrid: DxDataGridComponent;
   orders: Order[];
-  userData: Order[];
+ // userData: Order[];
   grossProductData: Order[];
   saleAmountHeaderFilter: any;
   applyFilterTypes: any;
@@ -76,7 +76,16 @@ export class AppComponent {
   onPointClick(e) {
     e.target.select();
   }
+  customizeItems(items) {
+    const sortedItems = [];
 
+    // tslint:disable-next-line:only-arrow-functions
+    items.forEach(function(item) {
+      const startIndex = item.series.stack === 'Income' ? 0 : 3;
+      sortedItems.splice(startIndex, 0, item);
+    });
+    return sortedItems;
+  }
   calculateFilterExpression(value, selectedFilterOperations, target) {
     const column = this as any;
     if (target === 'headerFilter' && value === 'weekends') {

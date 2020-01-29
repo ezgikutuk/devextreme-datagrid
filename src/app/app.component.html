@@ -1,96 +1,106 @@
+<div class="container mt-3">
+  <div class="row ">
+    <div class="col-sm " >
+      <dx-data-grid
+        id="gridContainer"
+        [dataSource]="orders"
+        [showBorders]="true">
+        <dxo-filter-row
+          [visible]="showFilterRow"
+          [applyFilter]="currentFilter"></dxo-filter-row>
+        <dxo-header-filter
+          [visible]="showHeaderFilter"></dxo-header-filter>
+        <dxo-search-panel
+          [visible]="true"
+          [width]="240"
+          placeholder="Search..."></dxo-search-panel>
+        <dxi-column
+          dataField="OrderNumber"
+          [width]="140"
+          caption="Invoice Number">
+          <dxo-header-filter
+            [groupInterval]="10000"></dxo-header-filter>
+        </dxi-column>
+        <dxi-column
+          dataField="OrderDate"
+          alignment="right"
+          dataType="date"
+          [width]="120"
+          [calculateFilterExpression]="calculateFilterExpression">
+          <dxo-header-filter
+            [dataSource]="orderHeaderFilter"></dxo-header-filter>
+        </dxi-column>
+        <dxi-column
+          dataField="DeliveryDate"
+          alignment="right"
+          dataType="datetime"
+          format="M/d/yyyy, HH:mm"
+          [width]="180"></dxi-column>
+        <dxi-column
+          dataField="SaleAmount"
+          alignment="right"
+          format="currency"
+          [editorOptions]="{ format: 'currency', showClearButton: true }">
+          <dxo-header-filter
+            [dataSource]="saleAmountHeaderFilter"></dxo-header-filter>
+        </dxi-column>
+        <dxi-column dataField="Employee"></dxi-column>
+        <dxi-column
+          dataField="CustomerStoreCity"
+          caption="City">
+          <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
+        </dxi-column>
+      </dx-data-grid>
 
-<dx-data-grid
-  id="gridContainer"
-  [dataSource]="orders"
-  [showBorders]="true">
-  <dxo-filter-row
-    [visible]="showFilterRow"
-    [applyFilter]="currentFilter"></dxo-filter-row>
-  <dxo-header-filter
-    [visible]="showHeaderFilter"></dxo-header-filter>
-  <dxo-search-panel
-    [visible]="true"
-    [width]="240"
-    placeholder="Search..."></dxo-search-panel>
-  <dxi-column
-    dataField="OrderNumber"
-    [width]="140"
-    caption="Invoice Number">
-    <dxo-header-filter
-      [groupInterval]="10000"></dxo-header-filter>
-  </dxi-column>
-  <dxi-column
-    dataField="OrderDate"
-    alignment="right"
-    dataType="date"
-    [width]="120"
-    [calculateFilterExpression]="calculateFilterExpression">
-    <dxo-header-filter
-      [dataSource]="orderHeaderFilter"></dxo-header-filter>
-  </dxi-column>
-  <dxi-column
-    dataField="DeliveryDate"
-    alignment="right"
-    dataType="datetime"
-    format="M/d/yyyy, HH:mm"
-    [width]="180"></dxi-column>
-  <dxi-column
-    dataField="SaleAmount"
-    alignment="right"
-    format="currency"
-    [editorOptions]="{ format: 'currency', showClearButton: true }">
-    <dxo-header-filter
-      [dataSource]="saleAmountHeaderFilter"></dxo-header-filter>
-  </dxi-column>
-  <dxi-column dataField="Employee"></dxi-column>
-  <dxi-column
-    dataField="CustomerStoreCity"
-    caption="City">
-    <dxo-header-filter [allowSearch]="true"></dxo-header-filter>
-  </dxi-column>
-</dx-data-grid>
+      <!--<dx-chart-->
+      <!--  id="chart"-->
+      <!--  [dataSource]="userData"-->
+      <!--  palette="soft">-->
+      <!--  <dxo-title-->
+      <!--    text="Sale Amount"-->
+      <!--    subtitle="as of January 2017">-->
+      <!--  </dxo-title>-->
+      <!--  <dxo-common-series-settings-->
+      <!--    argumentField="SaleAmount"-->
+      <!--    type="bar"-->
+      <!--    valueField="CustomerStoreCity"-->
+      <!--    [ignoreEmptyPoints]="true">-->
+      <!--  </dxo-common-series-settings>-->
+      <!--  <dxo-series-template nameField="SaleAmount"></dxo-series-template>-->
+      <!--</dx-chart>-->
 
-<!--<dx-chart-->
-<!--  id="chart"-->
-<!--  [dataSource]="userData"-->
-<!--  palette="soft">-->
-<!--  <dxo-title-->
-<!--    text="Sale Amount"-->
-<!--    subtitle="as of January 2017">-->
-<!--  </dxo-title>-->
-<!--  <dxo-common-series-settings-->
-<!--    argumentField="SaleAmount"-->
-<!--    type="bar"-->
-<!--    valueField="CustomerStoreCity"-->
-<!--    [ignoreEmptyPoints]="true">-->
-<!--  </dxo-common-series-settings>-->
-<!--  <dxo-series-template nameField="SaleAmount"></dxo-series-template>-->
-<!--</dx-chart>-->
+      <dx-chart
+        id="chart"
+        title="Income-Expense Table"
+        [dataSource]="grossProductData"
+        (onPointClick)="onPointClick($event)">
+        <dxi-series valueField="Income" name="income"></dxi-series>
+        <dxi-series valueField="Expense" name="expense"></dxi-series>
 
-<dx-chart
-  id="chart"
-  title="Gross State Product within the Great Lakes Region"
-  [dataSource]="grossProductData"
-  (onPointClick)="onPointClick($event)">
-  <dxi-series valueField="Income" name="income"></dxi-series>
-  <dxi-series valueField="Expense" name="expense"></dxi-series>
-
-  <dxo-common-series-settings
-    argumentField="Month"
-    type="bar"
-    hoverMode="allArgumentPoints"
-    selectionMode="allArgumentPoints">
-    <dxo-label
-      [visible]="true"
-      [format]="{
+        <dxo-common-series-settings
+          argumentField="Month"
+          type="bar"
+          hoverMode="allArgumentPoints"
+          selectionMode="allArgumentPoints">
+          <dxo-label
+            [visible]="true"
+            [format]="{
                 type: 'fixedPoint',
                 precision: '0'
             }">
-    </dxo-label>
-  </dxo-common-series-settings>
-  <dxo-legend
-    verticalAlignment="bottom"
-    horizontalAlignment="center">
-  </dxo-legend>
-  <dxo-export [enabled]="true"></dxo-export>
-</dx-chart>
+          </dxo-label>
+        </dxo-common-series-settings>
+        <dxo-legend
+          verticalAlignment="bottom"
+          horizontalAlignment="center"
+          [customizeItems]="customizeItems">
+          <!--    position="inside"  -->
+
+        </dxo-legend>
+        <!--  <dxo-export [enabled]="true"></dxo-export>-->
+        <dxo-tooltip [enabled]="true"></dxo-tooltip>
+      </dx-chart>
+
+    </div>
+  </div>
+</div>
