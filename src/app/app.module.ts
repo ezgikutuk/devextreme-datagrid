@@ -3,16 +3,20 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {DxChartModule, DxCheckBoxModule, DxDataGridModule, DxSelectBoxModule} from 'devextreme-angular';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    DxDataGridModule,
+    DxSelectBoxModule,
+    DxCheckBoxModule,
+    DxChartModule
   ],
-  providers: [],
+  declarations: [AppComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);
