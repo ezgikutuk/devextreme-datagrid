@@ -18,18 +18,11 @@ if (!/localhost/.test(document.location.host)) {
   preserveWhitespaces: true
 })
 export class AppComponent {
-  @ViewChild(DxDataGridComponent, { static: false }) dataGrid: DxDataGridComponent;
-  orders: Order[];
-  userData: Order[];
-  saleAmountHeaderFilter: any;
-  applyFilterTypes: any;
-  currentFilter: any;
-  showFilterRow: boolean;
-  showHeaderFilter: boolean;
 
   constructor(service: Service) {
     this.orders = service.getOrders();
-    this.userData = service.getUserData();
+    // this.userData = service.getUserData();
+    this.grossProductData = service.getGrossProductData();
     this.showFilterRow = true;
     this.showHeaderFilter = true;
     this.applyFilterTypes = [{
@@ -67,9 +60,21 @@ export class AppComponent {
     this.currentFilter = this.applyFilterTypes[0].key;
     this.orderHeaderFilter = this.orderHeaderFilter.bind(this);
   }
+  @ViewChild(DxDataGridComponent, { static: false }) dataGrid: DxDataGridComponent;
+  orders: Order[];
+  userData: Order[];
+  grossProductData: Order[];
+  saleAmountHeaderFilter: any;
+  applyFilterTypes: any;
+  currentFilter: any;
+  showFilterRow: boolean;
+  showHeaderFilter: boolean;
 
   private static getOrderDay(rowData) {
     return (new Date(rowData.OrderDate)).getDay();
+  }
+  onPointClick(e) {
+    e.target.select();
   }
 
   calculateFilterExpression(value, selectedFilterOperations, target) {

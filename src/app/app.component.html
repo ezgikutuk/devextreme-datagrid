@@ -50,19 +50,47 @@
   </dxi-column>
 </dx-data-grid>
 
+<!--<dx-chart-->
+<!--  id="chart"-->
+<!--  [dataSource]="userData"-->
+<!--  palette="soft">-->
+<!--  <dxo-title-->
+<!--    text="Sale Amount"-->
+<!--    subtitle="as of January 2017">-->
+<!--  </dxo-title>-->
+<!--  <dxo-common-series-settings-->
+<!--    argumentField="SaleAmount"-->
+<!--    type="bar"-->
+<!--    valueField="CustomerStoreCity"-->
+<!--    [ignoreEmptyPoints]="true">-->
+<!--  </dxo-common-series-settings>-->
+<!--  <dxo-series-template nameField="SaleAmount"></dxo-series-template>-->
+<!--</dx-chart>-->
+
 <dx-chart
   id="chart"
-  [dataSource]="userData"
-  palette="soft">
-  <dxo-title
-    text="Age Breakdown of Facebook Users in the U.S."
-    subtitle="as of January 2017">
-  </dxo-title>
+  title="Gross State Product within the Great Lakes Region"
+  [dataSource]="grossProductData"
+  (onPointClick)="onPointClick($event)">
+  <dxi-series valueField="Income" name="income"></dxi-series>
+  <dxi-series valueField="Expense" name="expense"></dxi-series>
+
   <dxo-common-series-settings
-    argumentField="SaleAmount"
+    argumentField="Month"
     type="bar"
-    valueField="CustomerStoreCity"
-    [ignoreEmptyPoints]="true">
+    hoverMode="allArgumentPoints"
+    selectionMode="allArgumentPoints">
+    <dxo-label
+      [visible]="true"
+      [format]="{
+                type: 'fixedPoint',
+                precision: '0'
+            }">
+    </dxo-label>
   </dxo-common-series-settings>
-  <dxo-series-template nameField="SaleAmount"></dxo-series-template>
+  <dxo-legend
+    verticalAlignment="bottom"
+    horizontalAlignment="center">
+  </dxo-legend>
+  <dxo-export [enabled]="true"></dxo-export>
 </dx-chart>
